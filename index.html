@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账户登录 - 专业平台</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 配置Tailwind自定义主题 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFFB',
+            neutral: {
+              100: '#F5F7FA',
+              200: '#E4E7ED',
+              300: '#C0C6CF',
+              400: '#909399',
+              500: '#606266',
+              600: '#303133',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 10px 30px -5px rgba(22, 93, 255, 0.1)',
+            'hover': '0 20px 40px -5px rgba(22, 93, 255, 0.2)',
+          }
+        },
+      }
+    }
+  </script>
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .bg-gradient-primary {
+        background: linear-gradient(135deg, #165DFF 0%, #36CFFB 100%);
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .transition-all-300 {
+        transition: all 0.3s ease;
+      }
+      .input-focus {
+        @apply focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none;
+      }
+    }
+  </style>
+  <!-- 引入Google字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-neutral-100 min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
+  <!-- 登录容器 -->
+  <div class="w-full max-w-5xl flex flex-col lg:flex-row bg-white rounded-2xl shadow-card overflow-hidden transition-all duration-500 hover:shadow-hover">
+    <!-- 左侧图片区域（仅桌面显示） -->
+    <div class="hidden lg:block lg:w-1/2 bg-gradient-primary p-12 flex flex-col justify-center items-center text-white">
+      <div class="text-center space-y-6">
+        <div class="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center mb-6">
+          <<i class="fa fa-shield text-4xl"></</i>
+        </div>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-shadow">欢迎回来</h2>
+        <p class="text-white/90 text-lg">安全登录您的账户，体验专业级服务与保障</p>
+        <div class="mt-12 space-y-4">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+              <<i class="fa fa-lock text-xl"></</i>
+            </div>
+            <div class="text-left">
+              <h3 class="font-semibold text-lg">银行级安全</h3>
+              <p class="text-white/80 text-sm">全程加密传输</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+              <<i class="fa fa-bolt text-xl"></</i>
+            </div>
+            <div class="text-left">
+              <h3 class="font-semibold text-lg">极速体验</h3>
+              <p class="text-white/80 text-sm">流畅无卡顿</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧登录表单区域 -->
+    <div class="w-full lg:w-1/2 p-8 sm:p-12 flex flex-col">
+      <!-- 移动端Logo -->
+      <div class="lg:hidden flex justify-center mb-8">
+        <div class="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center">
+          <<i class="fa fa-shield text-white text-2xl"></</i>
+        </div>
+      </div>
+      
+      <div class="mb-8 text-center lg:text-left">
+        <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-neutral-600 mb-2">账户登录</h1>
+        <p class="text-neutral-400">请输入您的账号信息以继续</p>
+      </div>
+
+      <!-- 登录表单 -->
+      <form class="space-y-6 flex-grow flex flex-col">
+        <!-- 用户名输入框 -->
+        <div class="relative">
+          <label for="username" class="block text-sm font-medium text-neutral-500 mb-1">用户名/邮箱</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-400">
+              <<i class="fa fa-user"></</i>
+            </span>
+            <input 
+              type="text" 
+              id="username" 
+              class="w-full pl-10 pr-4 py-3 rounded-lg border border-neutral-200 transition-all-300 input-focus"
+              placeholder="请输入用户名或邮箱"
+              required
+            >
+          </div>
+        </div>
+
+        <!-- 密码输入框 -->
+        <div class="relative">
+          <div class="flex justify-between items-center mb-1">
+            <label for="password" class="block text-sm font-medium text-neutral-500">密码</label>
+            <a href="#" class="text-sm text-primary hover:text-primary/80 transition-all-300">忘记密码?</a>
+          </div>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-400">
+              <<i class="fa fa-lock"></</i>
+            </span>
+            <input 
+              type="password" 
+              id="password" 
+              class="w-full pl-10 pr-10 py-3 rounded-lg border border-neutral-200 transition-all-300 input-focus"
+              placeholder="请输入密码"
+              required
+            >
+            <button 
+              type="button" 
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-neutral-400 hover:text-neutral-600 transition-all-300"
+              id="togglePassword"
+            >
+              <<i class="fa fa-eye-slash"></</i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 记住登录 -->
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            id="remember" 
+            class="w-4 h-4 rounded text-primary focus:ring-primary/20 border-neutral-200"
+          >
+          <label for="remember" class="ml-2 text-sm text-neutral-500">记住我（7天内自动登录）</label>
+        </div>
+
+        <!-- 登录按钮 -->
+        <button 
+          type="submit" 
+          class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded-lg transition-all-300 flex items-center justify-center space-x-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transform hover:-translate-y-0.5 active:translate-y-0"
+        >
+          <span>登录</span>
+          <<i class="fa fa-arrow-right"></</i>
+        </button>
+
+        <!-- 分隔线 -->
+        <div class="flex items-center my-6">
+          <div class="flex-grow h-px bg-neutral-200"></div>
+          <span class="px-4 text-neutral-400 text-sm">其他登录方式</span>
+          <div class="flex-grow h-px bg-neutral-200"></div>
+        </div>
+
+        <!-- 第三方登录 -->
+        <div class="grid grid-cols-3 gap-4">
+          <button 
+            type="button" 
+            class="flex items-center justify-center space-x-2 border border-neutral-200 rounded-lg py-3 hover:bg-neutral-50 transition-all-300"
+          >
+            <<i class="fa fa-weixin text-green-500"></</i>
+            <span class="text-neutral-600 text-sm">微信</span>
+          </button>
+          <button 
+            type="button" 
+            class="flex items-center justify-center space-x-2 border border-neutral-200 rounded-lg py-3 hover:bg-neutral-50 transition-all-300"
+          >
+            <<i class="fa fa-qq text-blue-400"></</i>
+            <span class="text-neutral-600 text-sm">QQ</span>
+          </button>
+          <button 
+            type="button" 
+            class="flex items-center justify-center space-x-2 border border-neutral-200 rounded-lg py-3 hover:bg-neutral-50 transition-all-300"
+          >
+            <<i class="fa fa-envelope text-neutral-600"></</i>
+            <span class="text-neutral-600 text-sm">邮箱</span>
+          </button>
+        </div>
+
+        <!-- 注册链接 -->
+        <div class="mt-auto text-center">
+          <p class="text-neutral-500">还没有账户? 
+            <a href="#" class="text-primary font-medium hover:text-primary/80 transition-all-300">立即注册</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="w-full max-w-5xl mt-8 text-center text-neutral-400 text-sm">
+    <p>© 2025 专业平台 版权所有 | 
+      <a href="#" class="hover:text-primary transition-all-300">服务条款</a> | 
+      <a href="#" class="hover:text-primary transition-all-300">隐私政策</a>
+    </p>
+  </footer>
+
+  <!-- JavaScript交互逻辑 -->
+  <script>
+    // 密码显示/隐藏切换
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+      // 切换密码输入类型
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      
+      // 切换图标
+      togglePassword.querySelector('i').classList.toggle('fa-eye');
+      togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    // 表单提交处理
+    const loginForm = document.querySelector('form');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 模拟登录加载状态
+      const loginButton = loginForm.querySelector('button[type="submit"]');
+      const originalText = loginButton.innerHTML;
+      
+      loginButton.disabled = true;
+      loginButton.innerHTML = '<<i class="fa fa-spinner fa-spin"></</i> <span>登录中...</span>';
+      
+      // 模拟登录请求（2秒后恢复）
+      setTimeout(() => {
+        loginButton.disabled = false;
+        loginButton.innerHTML = originalText;
+        
+        // 这里可以添加实际的登录逻辑
+        alert('登录成功！（模拟）');
+      }, 2000);
+    });
+
+    // 输入框动画效果
+    const inputFields = document.querySelectorAll('input');
+    inputFields.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('scale-[1.02]');
+        input.parentElement.classList.add('shadow-md');
+      });
+      
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('scale-[1.02]');
+        input.parentElement.classList.remove('shadow-md');
+      });
+    });
+  </script>
+</body>
+</html>
