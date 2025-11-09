@@ -1,104 +1,595 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>账户登录 - 专业平台</title>
-  <!-- 引入Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- 引入Font Awesome图标 -->
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!-- 配置Tailwind自定义主题 -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#165DFF',
-            secondary: '#36CFFB',
-            neutral: {
-              100: '#F5F7FA',
-              200: '#E4E7ED',
-              300: '#C0C6CF',
-              400: '#909399',
-              500: '#606266',
-              600: '#303133',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>樱花飘落登录页面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #sakura-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .login-container {
+            position: relative;
+            width: 420px;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            padding: 40px 35px;
+            color: #5a3e36;
+            z-index: 10;
+            animation: containerFloat 8s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes containerFloat {
+            0%, 100% {
+                transform: translateY(0);
             }
-          },
-          fontFamily: {
-            inter: ['Inter', 'system-ui', 'sans-serif'],
-          },
-          boxShadow: {
-            'card': '0 10px 30px -5px rgba(22, 93, 255, 0.1)',
-            'hover': '0 20px 40px -5px rgba(22, 93, 255, 0.2)',
-          }
-        },
-      }
-    }
-  </script>
-  <!-- 自定义工具类 -->
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .bg-gradient-primary {
-        background: linear-gradient(135deg, #165DFF 0%, #36CFFB 100%);
-      }
-      .text-shadow {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      .transition-all-300 {
-        transition: all 0.3s ease;
-      }
-      .input-focus {
-        @apply focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none;
-      }
-    }
-  </style>
-  <!-- 引入Google字体 -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2rem;
+            color: #7a4f4a;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            color: #5a3e36;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(5px);
+        }
+        
+        .input-group input:focus {
+            border-color: rgba(255, 182, 193, 0.8);
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: rgba(90, 62, 54, 0.7);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: transparent;
+            padding: 0 8px;
+        }
+        
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: 0;
+            transform: translateY(-50%) scale(0.9);
+            color: #d46a6a;
+            font-weight: 500;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(90, 62, 54, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus ~ .input-icon {
+            color: #d46a6a;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #d46a6a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .remember-me input[type="checkbox"]:hover {
+            transform: scale(1.1);
+        }
+        
+        .forgot-link {
+            color: rgba(90, 62, 54, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .forgot-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #d46a6a;
+            transition: width 0.3s ease;
+        }
+        
+        .forgot-link:hover {
+            color: #d46a6a;
+        }
+        
+        .forgot-link:hover::after {
+            width: 100%;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .social-login {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: rgba(90, 62, 54, 0.7);
+        }
+        
+        .social-divider::before,
+        .social-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(90, 62, 54, 0.3);
+            margin: 0 15px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: #5a3e36;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icon:hover::before {
+            transform: scale(1);
+        }
+        
+        .social-icon i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover i {
+            transform: scale(1.2);
+        }
+        
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .register-link a {
+            color: rgba(90, 62, 54, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .register-link a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #d46a6a;
+            transition: width 0.3s ease;
+        }
+        
+        .register-link a:hover {
+            color: #d46a6a;
+        }
+        
+        .register-link a:hover::after {
+            width: 100%;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                width: 90%;
+                padding: 30px 25px;
+                margin: 20px;
+            }
+            
+            .login-box h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+            
+            .social-icons {
+                gap: 10px;
+            }
+            
+            .social-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
 </head>
-<body class="font-inter bg-neutral-100 min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8">
-  <!-- 登录容器 -->
-  <div class="w-full max-w-5xl flex flex-col lg:flex-row bg-white rounded-2xl shadow-card overflow-hidden transition-all duration-500 hover:shadow-hover">
-    <!-- 左侧图片区域（仅桌面显示） -->
-    <div class="hidden lg:block lg:w-1/2 bg-gradient-primary p-12 flex flex-col justify-center items-center text-white">
-      <div class="text-center space-y-6">
-        <div class="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center mb-6">
-          <<i class="fa fa-shield text-4xl"></</i>
+<body>
+    <div id="sakura-container"></div>
+    
+    <div class="login-container">
+        <div class="login-box">
+            <h2>樱花之恋</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder=" " required>
+                    <label for="username">用户名或邮箱</label>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder=" " required>
+                    <label for="password">密码</label>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        记住我
+                    </label>
+                    <a href="#" class="forgot-link">忘记密码?</a>
+                </div>
+                <button type="submit" class="login-btn" id="submitBtn">登录</button>
+                <div class="social-login">
+                    <div class="social-divider">或使用以下方式登录</div>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-google"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="register-link">
+                    还没有账户? <a href="#">立即注册</a>
+                </div>
+            </form>
         </div>
-        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-shadow">欢迎回来</h2>
-        <p class="text-white/90 text-lg">安全登录您的账户，体验专业级服务与保障</p>
-        <div class="mt-12 space-y-4">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-              <<i class="fa fa-lock text-xl"></</i>
-            </div>
-            <div class="text-left">
-              <h3 class="font-semibold text-lg">银行级安全</h3>
-              <p class="text-white/80 text-sm">全程加密传输</p>
-            </div>
-          </div>
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-              <<i class="fa fa-bolt text-xl"></</i>
-            </div>
-            <div class="text-left">
-              <h3 class="font-semibold text-lg">极速体验</h3>
-              <p class="text-white/80 text-sm">流畅无卡顿</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <!-- 右侧登录表单区域 -->
-    <div class="w-full lg:w-1/2 p-8 sm:p-12 flex flex-col">
-      <!-- 移动端Logo -->
-      <div class="lg:hidden flex justify-center mb-8">
-        <div class="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center">
-          <<i class="fa fa-shield text-white text-2xl"></</i>
+    <script>
+        // 樱花飘落效果
+        class Sakura {
+            constructor(container) {
+                this.container = container;
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.container.appendChild(this.canvas);
+                
+                this.sakuras = [];
+                this.resize();
+                this.initSakuras();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+            
+            resize() {
+                this.width = this.container.clientWidth;
+                this.height = this.container.clientHeight;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+            }
+            
+            initSakuras() {
+                const sakuraCount = 25;
+                
+                for (let i = 0; i < sakuraCount; i++) {
+                    this.sakuras.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * -this.height,
+                        size: Math.random() * 10 + 5,
+                        speed: Math.random() * 2 + 1,
+                        swing: Math.random() * 2,
+                        swingSpeed: Math.random() * 0.02 + 0.01,
+                        angle: 0,
+                        opacity: Math.random() * 0.5 + 0.3
+                    });
+                }
+            }
+            
+            drawSakura(sakura) {
+                this.ctx.save();
+                this.ctx.translate(sakura.x, sakura.y);
+                this.ctx.rotate(sakura.angle);
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, 0);
+                this.ctx.bezierCurveTo(
+                    sakura.size * 0.5, -sakura.size * 0.2,
+                    sakura.size * 0.8, sakura.size * 0.3,
+                    0, sakura.size
+                );
+                this.ctx.bezierCurveTo(
+                    -sakura.size * 0.8, sakura.size * 0.3,
+                    -sakura.size * 0.5, -sakura.size * 0.2,
+                    0, 0
+                );
+                
+                this.ctx.fillStyle = `rgba(255, 200, 200, ${sakura.opacity})`;
+                this.ctx.fill();
+                
+                this.ctx.restore();
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                for (let sakura of this.sakuras) {
+                    sakura.y += sakura.speed;
+                    sakura.x += Math.sin(sakura.swing) * 0.5;
+                    sakura.swing += sakura.swingSpeed;
+                    sakura.angle += 0.01;
+                    
+                    if (sakura.y > this.height) {
+                        sakura.y = -20;
+                        sakura.x = Math.random() * this.width;
+                    }
+                    
+                    this.drawSakura(sakura);
+                }
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // 涟漪效果
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+            circle.classList.add('ripple');
+            
+            const ripple = button.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+            
+            button.appendChild(circle);
+        }
+        
+        // 表单提交处理
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // 禁用按钮并显示加载状态
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';
+            submitBtn.style.opacity = '0.8';
+            
+            // 模拟异步登录过程
+            setTimeout(() => {
+                // 这里可以添加实际的登录逻辑
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> 登录成功!';
+                submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+                    alert('登录成功！欢迎来到樱花之恋！');
+                }, 1500);
+            }, 2000);
+        });
+        
+        // 添加涟漪效果到按钮
+        const buttons = document.querySelectorAll('.login-btn, .social-icon');
+        buttons.forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化樱花效果
+            new Sakura(document.getElementById('sakura-container'));
+            
+            // 添加初始动画延迟，让元素逐个出现
+            const loginContainer = document.querySelector('.login-container');
+            loginContainer.style.opacity = '0';
+            loginContainer.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                loginContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                loginContainer.style.opacity = '1';
+                loginContainer.style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>          <<i class="fa fa-shield text-white text-2xl"></</i>
         </div>
       </div>
       
